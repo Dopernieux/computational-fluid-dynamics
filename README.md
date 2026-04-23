@@ -1,14 +1,15 @@
 # Computational Fluid Dynamics - From Scratch
 
-Implementation of basic CFD equations in 1D from scratch.
+Implementation of basic CFD equations in 1D and 2D from scratch.
 
-Implementacje równań CFD w 1D napisane od podstaw.
+Implementacje równań CFD w 1D i 2D napisane od podstaw.
 
 ## Models
 
-- Linear Convection
-- Nonlinear Convection
-- Burgers' Equation
+- 1D and 2D Linear Convection
+- 1D and 2D Diffusion
+- 1D and 2D Nonlinear Convection
+- 1D and 2D Burgers' Equation
 
 ## Results
 
