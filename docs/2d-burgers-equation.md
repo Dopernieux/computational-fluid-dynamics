@@ -11,6 +11,9 @@ v_t + u*v_x + v*v_y = ν*(v_xx + v_yy)
 ## Observations
 - the square initial condition diffuses and advects over time — sharp edges smooth out due to viscosity
 - increasing nx/ny improves accuracy but slows computation significantly due to nested loops
+- for the phenomenon of convection and diffusion to be easily visible, added 4 steps in time
+- the velocity field begins restrained by initial conditions, then moves right and up due to convection
+- the velocity field becomes blurry with time due to diffusion
 
 ## Problems
 - CFL stability condition must be satisfied: vis*dt/dx² < 0.5 — violated conditions produce NaN instantly

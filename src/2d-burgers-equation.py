@@ -12,7 +12,7 @@ nx = 50
 ny = 50
 nt = 50
 dt = 0.001
-vis = 0.1
+vis = 0.4
 dx = 2 / (nx-1)
 dy = 2 / (ny-1)
 
@@ -28,6 +28,9 @@ for i in range(nx):
         else:
             u[i, j] = 1
             v[i, j] = 1
+
+fig, axes = pyplot.subplots(2, 2, figsize=(10, 8))
+snapshots = []
 
 for it in range(nt):
     un = numpy.copy(u)
@@ -46,15 +49,27 @@ for it in range(nt):
     v[-1, :] = 1
     v[:, 0] = 1
     v[:, -1] = 1
+
+    if it in [0, nt//3, 2*nt//3, nt-1]:
+        snapshots.append((it, numpy.copy(u)))
     
 x = numpy.linspace(0, 2, nx)
 y = numpy.linspace(0, 2, ny)
 X, Y = numpy.meshgrid(x, y)
 
+for ax, (it, snap) in zip(axes.flat, snapshots):
+    cf = ax.contourf(X, Y, snap.T, cmap='magma', levels=20)
+    ax.set_title(f't = {it*dt:.3f}')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    pyplot.colorbar(cf, ax=ax)
+    
+'''
 pyplot.contourf(X, Y, u.T, cmap='viridis')
 pyplot.colorbar(label='u')
 pyplot.xlabel('x')
 pyplot.ylabel('y')
+'''
 
 pyplot.text(0.02, 0.05,
             r'$\frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} + v\frac{\partial u}{\partial y} = \nu(\frac{\partial^2 u}{\partial x^2}+\frac{\partial^2 u}{\partial y^2})$'
