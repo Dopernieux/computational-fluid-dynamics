@@ -13,6 +13,7 @@ Implementacje równań CFD w 1D i 2D napisane od podstaw.
 
 ## Results
 
+![1dLinearConvection](results/1d-linear-convection-multiple-schemes-4-steps.png)
 ![2dBurgers](results/2d-burgers-equation-steps.png)
 ![1dBurgers](results/1d-burgers-equation.png)
 ![2dDiffusion](results/2d-diffusion-low-dt.png)
