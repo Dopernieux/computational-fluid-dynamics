@@ -19,13 +19,14 @@ ubd = numpy.zeros(nx)
 ucd = numpy.zeros(nx)
 u2bde = numpy.zeros(nx)
 u2bdi = numpy.zeros(nx)
+ulw = numpy.zeros(nx)
 
 x = numpy.linspace(0, 2, nx)
 for i in range(nx):
     if 0.9 <= x[i] <= 1.0:
-        ubd[i] = ucd[i] = u2bde[i] = u2bdi[i] = 10*(x[i]-0.9)
+        ubd[i] = ucd[i] = u2bde[i] = u2bdi[i] = ulw[i] = 10*(x[i]-0.9)
     if 1.0 <= x[i] <= 1.1:
-        ubd[i] = ucd[i] = u2bde[i] = u2bdi[i] = 10*(1.1-x[i])
+        ubd[i] = ucd[i] = u2bde[i] = u2bdi[i] = ulw[i] = 10*(1.1-x[i])
 
 uzero = ubd.copy()
 
@@ -47,12 +48,13 @@ for it in range(nt):
     uncd  = ucd.copy()
     un2bde = u2bde.copy()
     un2bdi = u2bdi.copy()
-
+    unlw = ulw.copy()
     for i in range(1, nx-1):
         ubd[i]   = unbd[i]   - c*dt/dx*(unbd[i] - unbd[i-1])
         ucd[i]   = uncd[i]   - c*dt/2/dx*(uncd[i+1] - uncd[i-1])
         u2bde[i] = un2bde[i] - c*dt/2/dx*(3*un2bde[i] - 4*un2bde[i-1] + un2bde[i-2])
-
+        ulw[i] = (unlw[i] - c*dt/(2*dx)*(unlw[i+1] - unlw[i-1]) + (c*dt/dx)**2/2*(unlw[i+1] - 2*unlw[i] + unlw[i-1]))
+        
     b = un2bdi.copy()
     u2bdi = numpy.linalg.solve(A, b)
 
@@ -62,6 +64,7 @@ for it in range(nt):
             'ucd':   ucd.copy(),
             'u2bde': u2bde.copy(),
             'u2bdi': u2bdi.copy(),
+            'ulw' : ulw.copy()
         }
 
 fig, axes = pyplot.subplots(2, 2, figsize=(12, 8))
@@ -75,6 +78,7 @@ for ax, step in zip(axes.flat, snap_steps):
     ax.plot(x, snap['ucd'],   label='CD (1st order)')
     ax.plot(x, snap['u2bde'], label='2nd order BD explicit')
     ax.plot(x, snap['u2bdi'], label='2nd order BD implicit')
+    ax.plot(x, snap['ulw'], label='Lax-Wendroff (2nd order)')
     ax.set_title(f't = {t_val:.3f}  (krok {step})')
     ax.set_xlabel('x')
     ax.set_ylabel('u')
