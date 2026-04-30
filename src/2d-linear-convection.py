@@ -19,9 +19,6 @@ dy = 2 / (ny-1)
 
 u = numpy.ones((nx, ny))
 
-u[0, 0] = 1
-u[-1, -1] = 1
-
 def b_table():
     u[int(.5 / dx): int(1 / dx + 1), int(.5 / dy): int(1 / dy + 1)] = 2
 
@@ -36,13 +33,22 @@ def c_array():
         un = u.copy()
         u[1:, 1:] = un[1:,1:] - c*(dt/dx)*(un[1:,1:]-un[0:-1,1:]) - c*(dt/dy)*(un[1:,1:]-un[1:,0:-1])
         
+        u[0, :] = 1
+        u[-1, :] = 1
+        u[:, 0] = 1
+        u[:, -1] = 1
+        
 def c_raw():
     for n in range(nt):
         un = u.copy()
         for i in range(1, nx-1):
             for j in range(1, ny-1):
                 u[i,j] = un[i,j] - c*(dt/dx)*(un[i,j]-un[i-1,j]) - c*(dt/dy)*(un[i,j]-un[i,j-1])    
-
+                
+        u[0, :] = 1
+        u[-1, :] = 1
+        u[:, 0] = 1
+        u[:, -1] = 1
 if __name__ == '__main__':
     setup = "from __main__ import b_table, b_loop, c_raw, c_array, u"
     
@@ -56,6 +62,9 @@ if __name__ == '__main__':
     print(f"BC loop, calculation loops: {t_b_loop_c_raw:.4f} s")
     print(f"BC loop, calculation array: {t_b_loop_c_array:.4f} s")
 
+u = numpy.ones((nx, ny))
+b_table()
+c_array()
 
 x = numpy.linspace(0, 2, nx)
 y = numpy.linspace(0, 2, ny)
@@ -65,13 +74,9 @@ pyplot.contourf(X, Y, u, cmap='viridis')
 pyplot.colorbar(label='u')
 pyplot.xlabel('x')
 pyplot.ylabel('y')
-pyplot.show
-      
-'''  
+pyplot.title('2D Linear Convection')
 pyplot.text(0.02, 0.05,
-            r'$\frac{\partial u}{\partial t} + \c\frac{\partial u}{\partial x} + \c\frac{\partial u}{\partial y}= \0$',
+            r'$\frac{\partial u}{\partial t} + c\frac{\partial u}{\partial x} + c\frac{\partial u}{\partial y}= 0$',
             transform=pyplot.gca().transAxes,
-            fontsize=13)
-'''
-pyplot.legend()
+            fontsize=11)
 pyplot.show()
