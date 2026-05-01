@@ -20,6 +20,8 @@ Implementacje równań CFD w 1D i 2D napisane od podstaw.
 ![2dDiffusion](results/2d-diffusion-low-dt.png)
 ![Diffusion](results/1d-diffusion-low-vis.png)
 ![2dConvection](2d-linear-convection.png)
+![2dConvectionPlot3d](2d-linear-convection-3dplot.png)
+
 
 ## Run
 

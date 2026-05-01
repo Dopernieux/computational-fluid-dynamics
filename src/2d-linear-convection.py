@@ -9,8 +9,8 @@ import numpy
 import timeit
 from matplotlib import pyplot
 
-nx = 20
-ny = 20
+nx = 60
+ny = 60
 nt = 50
 dt = 0.01
 c = 1
@@ -70,13 +70,16 @@ x = numpy.linspace(0, 2, nx)
 y = numpy.linspace(0, 2, ny)
 X, Y = numpy.meshgrid(x, y)
 
-pyplot.contourf(X, Y, u, cmap='viridis')
-pyplot.colorbar(label='u')
-pyplot.xlabel('x')
-pyplot.ylabel('y')
-pyplot.title('2D Linear Convection')
-pyplot.text(0.02, 0.05,
+fig = pyplot.figure(figsize=(11, 7), dpi=100)
+ax = fig.add_subplot(111, projection='3d')
+surf = ax.plot_surface(X, Y, u.T, cmap='plasma')
+fig.colorbar(surf, ax=ax, label='u')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_ylabel('u')
+ax.set_title('2D Linear Convection')
+ax.text2D(0.02, 0.05,
             r'$\frac{\partial u}{\partial t} + c\frac{\partial u}{\partial x} + c\frac{\partial u}{\partial y}= 0$',
-            transform=pyplot.gca().transAxes,
+            transform=ax.transAxes,
             fontsize=11)
 pyplot.show()
