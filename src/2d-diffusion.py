@@ -37,13 +37,13 @@ def diffusion(nt):
         
         history.append(u.copy())
     
-diffusion(50)
+diffusion(17)
 
 X, Y = numpy.meshgrid(x, y)
 
 fig = pyplot.figure(figsize=(11, 7), dpi=100)
 ax = fig.add_subplot(111, projection='3d')
-surf = ax.plot_surface(X, Y, history[0].T, cmap='plasma', linewidth=0, antialiased=False)
+surf = [ax.plot_surface(X, Y, history[0].T, cmap='plasma', linewidth=0, antialiased=False)]
 fig.colorbar(surf[0], ax=ax, label='u')
 ax.set_xlim(0, 2)
 ax.set_ylim(0, 2)
@@ -60,10 +60,10 @@ def update(frame):
     return surf[0], title
 
 anim = FuncAnimation(fig, update, frames=len(history), interval=100)
-anim.save('2d_diffusion.gif', writer='pillow', fps=10)
-
 ax.text2D(0.02, 0.02,
             r'$\frac{\partial u}{\partial t} = \nu\frac{\partial^2 u}{\partial x^2} + \nu\frac{\partial^2 u}{\partial y^2}$',
             transform=ax.transAxes,
             fontsize=11)
+anim.save('2d_diffusion.gif', writer='pillow', fps=10)
+
 pyplot.show()

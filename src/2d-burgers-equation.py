@@ -11,23 +11,19 @@ from matplotlib import pyplot
 nx = 50
 ny = 50
 nt = 50
-dt = 0.001
-vis = 0.4
+nu = 0.4
 dx = 2 / (nx-1)
 dy = 2 / (ny-1)
+sigma = 0.0009
+dt = sigma * dx * dy / nu
 
 u = numpy.zeros((nx, ny))
 v = numpy.zeros((nx, ny))
 
+history = [u.copy(), v.copy()]
 
-for i in range(nx):
-    for j in range(ny):
-        if i > nx//2 - 5 and i < nx//2 + 5 and j > ny//2 - 5 and j < ny//2 + 5:
-            u[i, j] = 2
-            v[i, j] = 2
-        else:
-            u[i, j] = 1
-            v[i, j] = 1
+u[int(.5 / dx): int(1 / dx + 1), int(.5/ dy): int(1.5 / dy + 1)] = 2
+v[int(.5 / dx): int(1 / dx + 1), int(.5/ dy): int(1.5 / dy + 1)] = 2
 
 fig, axes = pyplot.subplots(2, 2, figsize=(10, 8))
 snapshots = []
