@@ -1,11 +1,11 @@
 # Computational Fluid Dynamics - From Scratch
 
+First models of droplet.
 Implementation of basic CFD equations in 1D and 2D from scratch.
-
-Implementacje równań CFD w 1D i 2D napisane od podstaw.
 
 ## Models
 
+- Young's Equation for microdroplet
 - 1D and 2D Linear Convection
 - 1D and 2D Diffusion
 - 1D and 2D Nonlinear Convection
@@ -13,6 +13,8 @@ Implementacje równań CFD w 1D i 2D napisane od podstaw.
 
 ## Results
 
+![YoungsEquationDroplet](results/3d-droplet-70.png)
+![YoungsEquationDroplet](results/droplet-cross-section-multiple-angles.png)
 ![1dLinearConvection](results/1d-linear-convection-multiple-schemes-4-steps-lw.png)
 ![1dLinearConvectionAnimation](results/1d-linear-convection.gif)
 ![2dBurgers](results/2d-burgers-equation-steps.png)
